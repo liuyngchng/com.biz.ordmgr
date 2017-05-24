@@ -1,0 +1,404 @@
+<!-- 还款列表  -->
+<div><label class="col-sm-2 control-label backstage-select-label">统一进件还款列表</label></div>
+<div class="ibox float-e-margins backstage-right-div">
+    <div class="ibox-content">
+        <form method="get" class="form-horizontal">
+            <!-- 渠道 -->
+            <input type="hidden" value='${bidChannelMapList}' id="bidChannelMapList">
+            <div class="form-group backstage-form-group">
+                <label class="col-sm-2 control-label backstage-select-label">进件渠道:</label>
+                <div class="col-sm-10 backstage-col-sm-10">
+                    <select class="form-control m-b backstage-select" name="bidChannel" id="bidChannel">
+                        <option value="">-- 全部 --</option>
+                        #foreach($channel in $bidChannelList)
+                            <option value="${channel.value}">${channel.name}</option>
+                        #end
+                    </select>
+                </div>
+            </div>
+            <div class="hr-line-dashed backstage-hr-line-dashed"></div>
+            <!-- 申请时间 -->
+##            <div class="form-group backstage-form-group">
+##                <label class="col-sm-2 control-label backstage-select-label">进件时间:</label>
+##                <div class="col-sm-10 backstage-col-sm-10">
+##                    <input id="apply_begin" class="laydate-icon form-control layer-date backstage-date" readonly="readonly" placeholder="开始日期" name="">
+##                    <input id="apply_end" class="laydate-icon form-control layer-date backstage-date" readonly="readonly" placeholder="结束日期">
+##                </div>
+##            </div>
+##            <div class="hr-line-dashed backstage-hr-line-dashed"></div>
+            <!-- 可放款时间 -->
+            <div class="form-group backstage-form-group">
+                <label class="col-sm-2 control-label backstage-select-label">放款日:</label>
+                <div class="col-sm-10 backstage-col-sm-10">
+                    <input id="pay_loan_begin" class="laydate-icon form-control layer-date backstage-date" readonly="readonly" placeholder="开始日期" name="">
+                    <input id="pay_loan_end" class="laydate-icon form-control layer-date backstage-date" readonly="readonly" placeholder="结束日期">
+                </div>
+            </div>
+            <div class="hr-line-dashed backstage-hr-line-dashed"></div>
+            <!-- 身份证号\手机号 -->
+            <div class="form-group backstage-form-group">
+                <label class="col-sm-2 control-label backstage-select-label">姓名\身份证号\手机号:</label>
+                <div class="col-sm-10 backstage-col-sm-10">
+                    <input placeholder="姓名、身份证号或手机号" class="form-control backstage-input" type="text" id="idOrMobile" name="idOrMobile">
+                </div>
+            </div>
+            <div class="hr-line-dashed backstage-hr-line-dashed"></div>
+            <!-- 风控ID -->
+            <div class="form-group backstage-form-group">
+                <label class="col-sm-2 control-label backstage-select-label">风控ID:</label>
+                <div class="col-sm-10 backstage-col-sm-10">
+                    <input class="form-control backstage-input" type="text" id="fkLoanNo" name="fkLoanNo">
+                </div>
+            </div>
+            <div class="hr-line-dashed backstage-hr-line-dashed"></div>
+            <!-- 操作按钮 -->
+            <div class="form-group backstage-form-group">
+                <div class="col-sm-10 backstage-col-sm-10">
+                    <button type="button" class="btn btn-w-m btn-danger backstage-button" onclick="search()">查询</button>
+##                    <button type="button" class="btn btn-w-m btn-danger backstage-button" onclick="exportData()">导出</button>
+                </div>
+            </div>
+            <div class="hr-line-dashed backstage-hr-line-dashed"></div>
+            <input type="hidden" name="auditStatus" id="auditStatus" value="3">
+        </form>
+    </div>
+    <div class="ibox-content">
+        <div class="bootstrap-table table-responsive backstage-table-div">
+            <div class="fixed-table-container">
+                <table id="table"></table>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<!-- 隐藏域 -->
+<div style="display: none">
+    <!-- 如果点击搜索,则需要将页码制为1 -->
+    <input id="ifPageOne" name="ifPageOne" value="0"/>
+</div>
+<script type="text/javascript">
+    //日期控件
+    var pay_loan_begin = {
+        elem: '#pay_loan_begin', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+        format: 'YYYY-MM-DD',
+        max: laydate.now(),
+        choose: function (datas) {
+            pay_loan_begin.min = datas; //开始日选好后，重置结束日的最小日期
+            pay_loan_end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var pay_loan_end = {
+        elem: '#pay_loan_end', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+        format: 'YYYY-MM-DD',
+        max: laydate.now(),
+        choose: function (datas) {
+            pay_loan_begin.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(pay_loan_begin);
+    laydate(pay_loan_end);
+
+    //table
+    $('#table').bootstrapTable({
+        cache: false,                                    //设置为 true 禁用 AJAX 数据缓存
+        method: 'post',
+        contentType: 'application/x-www-form-urlencoded',                //发送到服务器的数据编码类型
+        dataType: 'json',                               //服务器返回的数据类型
+        url: '${request.contextPath}/comimport/import/data',
+        undefinedText: '-',                             //当数据为 undefined 时显示的字符
+        striped: true,                                  //设置为 true 会有隔行变色效果
+        pagination: true,                               //设置为 true 会在表格底部显示分页条
+        sidePagination: 'server',                        //设置在哪里进行分页，可选值为 'client' 或者 'server'。设置 'server'时，必须设置 服务器数据地址（url）或者重写ajax方法
+        pageSize: 10,
+        pageNumber: 1,
+        pageList: [],
+        queryParams: queryParams,
+        columns: [
+            {
+            field: 'number',
+            title: '序号',
+            formatter: function (value, row, index) {
+                return index+1;
+            }
+        }, {
+            field: 'repayInfo.createTime',
+            title: '放款日'
+        }, {
+            field: 'userBaseInfo.name',
+            title: '客户姓名'
+        }, {
+            field: 'userBaseInfo.idCardNo',
+            title: '身份证号',
+            formatter: function(value, row, index) {
+                return tableIdFormatter(value);
+            }
+        }, {
+            field: 'userBaseInfo.mobile',
+            title: '手机号',
+            formatter: function(value, row, index) {
+                return tableMobileFormatter(value);
+            }
+        }, {
+            field: 'repayInfo.status',
+            title: '订单状态',
+            formatter: function(value, row, index) {
+                return getRepayStatus(value);
+            }
+        }, {
+            field: 'repayInfo.totalTerm',
+            title: '期数'
+        }, {
+            field: 'repayInfo.repayAmount',
+            title: '应还总金额(元)',
+            formatter: function(value, row, index) {
+                return FenToYuan(value)
+            }
+        }, {
+            field: 'loanApplyInfo.applyNo',
+            title: '小狐订单ID'
+        }, {
+            field: 'loanApplyInfo.fkLoanNo',
+            title: '风刃进件ID'
+        }, {
+            field: 'action',
+            title: '操作',
+            formatter: function(value, row, index) {
+                return "<a class='repayPlanDetail' href='javascript:void(0);'>查看明细</a>";
+            }
+        }]
+    })
+    //设置查询参数
+    function queryParams(params) {
+        if($("#ifPageOne").val() == 1) {
+            params.offset = 0;
+            var obj = $('#table').bootstrapTable('getOptions');
+            obj.pageNumber = 1;
+            $("#ifPageOne").val(0);
+        }
+        var obj = {
+            bidChannel: $("#bidChannel").val(),
+            pageSize: params.limit,
+            pageNumber: params.offset/10 + 1,
+            pay_loan_begin: $("#pay_loan_begin").val(),
+            pay_loan_end: $("#pay_loan_end").val(),
+            idOrMobile: $("#idOrMobile").val(),
+            fkLoanNo: $("#fkLoanNo").val(),
+            auditStatus: $("#auditStatus").val()
+        }
+        return obj;
+    }
+
+    //表格时间格式化
+    function tableDateFormatter(dateStr) {
+        if (dateStr != null && dateStr != "" && dateStr.length == 14) {
+            var strArray = dateStr.split("");
+            strArray.splice(4, 0, "-");
+            strArray.splice(7, 0, "-");
+            strArray.splice(10, 0, " ");
+            strArray.splice(13, 0, ":");
+            strArray.splice(16, 0, ":");
+            return strArray.join("");
+        } else {
+            return dateStr;
+        }
+    }
+    //表格身份证号脱敏
+    function tableIdFormatter(idStr) {
+        if (idStr != null && idStr != "") {
+            var strArray = idStr.split("");
+            if (strArray.length == 18) {
+                strArray.splice(3, 3, "***");
+                strArray.splice(14, 2, "**");
+            } else if (strArray.length == 15) {
+                strArray.splice(3, 3, "***");
+                strArray.splice(12, 2, "**");
+            }
+            return strArray.join("");
+        }
+    }
+    //表格手机号脱敏
+    function tableMobileFormatter(mobileStr) {
+        if (mobileStr != null && mobileStr != ""){
+            var strArray = mobileStr.split("");
+            strArray.splice(4, 4, "****");
+            return strArray.join("");
+        }
+    }
+    //查询按钮方法
+    function search() {
+        $("#ifPageOne").val(1);
+        $('#table').bootstrapTable('removeAll');
+        $('#table').bootstrapTable('refresh');
+    }
+    //导出表格数据
+    function exportData() {
+        var bidChannel= $("#bidChannel").val();
+        var loanType = $("#loanType").val();
+        var idOrMobile = $("#idOrMobile").val();
+        var fkLoanNo = $("#fkLoanNo").val();
+        var importStatus = $("#importStatus").val();
+        var auditStatus = $("#auditStatus").val();
+        window.location.href = "${request.contextPath}/comimport/import/export?" +
+                "pay_loan_begin=" + pay_loan_begin +
+                "&pay_loan_end=" + pay_loan_end +
+                "&idOrMobile=" + idOrMobile +
+                "&fkLoanNo=" + fkLoanNo +
+                "&auditStatus=" + auditStatus +
+                "bidChannel=" + bidChannel;
+    }
+
+    function FenToYuan(fen) {
+        if (fen != null && fen !== "") {
+            var yuan=fen/100.0;
+            return yuan.toFixed(2);
+        }
+        else {
+            return undefined;
+        }
+    }
+
+    function GetAuditStatus(value) {
+        if (value == 0) {
+            return "审核中";
+        } else if (value == 1) {
+            return "审核中";
+        } else if (value == 2) {
+            return "放款中";
+        } else if (value == 3) {
+            return "还款中";
+        } else if (value == 4) {
+            return "审核拒绝";
+        } else if (value == 5) {
+            return "已废弃";
+        } else if (value == 6) {
+            return "已结清";
+        } else if (value == 8) {
+            return "补充资料";
+        } else if (value == 11) {
+            return "复议";
+        } else if (value == 12) {
+            return "进件中";
+        } else if (value == 13) {
+            return "已逾期";
+        } else if (value == 14) {
+            return "放款失败";
+        } else if (value == 15) {
+            return "放标失败";
+        } else if (value == 16) {
+            return "放标中";
+        } else if (value == 10) {
+            return "确认中";
+        } else if (value == 9) {
+            return "审核通过";
+        } else {
+            return value;
+        }
+    }
+
+    function getRepayMode(value) {
+        if (value == 1) {
+            return "等额本息";
+        } else if (value == 2) {
+            return "先息后本";
+        } else if (value == 3) {
+            return "一次结清";
+        } else if (value == 4) {
+            return "等本等息";
+        } else if (value == 5) {
+            return "到期结清";
+        } else if (value == 6) {
+            return "一次付息";
+        } else {
+            return value;
+        }
+    }
+
+    $(function(){
+        //隐藏channel
+        $("#loanType option").each(function () {
+             var txt = $(this).text(); //获取单个text
+             var val = $(this).val(); //获取单个value
+             if ($("#loanType").val() == val) {
+                 $("#"+val+"channelDiv").show();
+             } else {
+                 $("#"+val+"channelDiv").hide();
+             }
+        });
+    })
+    $().ready(function(){
+        $("#page-wrapper").on("click",".repayPlanDetail", getRepayPlanDetail)
+    })
+    function getRepayPlanDetail(){
+        var loanId = $(this).parent().parent().find("td").eq(9).html();
+        var url = "../comimport/repay/detail";
+        $.ajax({
+            method: "post",
+            url: url,
+            data: {"loanId" : loanId},
+            success: function(data) {
+                var text = formatData(data);
+                alert(text);
+            },
+            error: function(data) {
+                console.log(data);
+                alert("提交出现异常！");
+            }
+        })
+    }
+
+    function formatData(data) {
+        var text = '风控ID\t\t\t当前期数\t应还金额(元)\t已还金额(元)\t状态\t应还日期\t实际还款日期\r\n'
+        for(var i = 0; i < data.length; i ++) {
+            text = text + data[i]["loanId"] + '\t' ;
+            text = text + padLeft(data[i]["repayTerm"], 2) + '\t';
+            text = text + padLeft(FenToYuan(data[i]["repayAmount"]), 8) + '\t';
+            text = text + padLeft(FenToYuan(data[i]["repaidAmount"]), 8) + '\t';
+            var status;
+            if (data[i]["bidStatus"] == "21") {
+                status = "还款中";
+            } else if (data[i]["bidStatus"] == "22") {
+                status = "已逾期";
+            } else if (data[i]["bidStatus"] == "32") {
+                status = "已结清";
+            } else {
+                status = data[i]["bidStatus"]
+            }
+            text = text + status + '\t';
+            text = text + padLeft(formatDate(data[i]["repayDate"]), 10) + '\t';
+            text = text + padLeft(formatDate(data[i]["repaidTime"]), 10) + '\r\n';
+        }
+        return text;
+    }
+
+    function  formatDate(value) {
+        if (null == value || value == 0) {
+            return '';
+        } else {
+            return new Date(value).toLocaleDateString();
+        }
+    }
+
+    function padLeft(val, length) {
+        var value = String(val);
+        if (value.length < length) {
+            for (var i = 0;i < length - value.length; i++) {
+                value = " " + value;
+            }
+        }
+        return value;
+    }
+
+    function getRepayStatus(value) {
+        var result;
+        if (value == 0) {
+            result = "还款中";
+        } else if (value == 1){
+            result = "已逾期";
+        } else if (value == 2){
+            result = "已结清";
+        } else {
+            result = value;
+        }
+        return result;
+    }
+</script>
