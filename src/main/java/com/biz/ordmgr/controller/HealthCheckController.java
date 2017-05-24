@@ -18,7 +18,7 @@ public final class HealthCheckController {
     /**
      * Constance.
      */
-    private static final String HEALTH_CHECK_OK = "ok";
+    private static final String HEALTH_CHECK_OK = "this is a test web for mobiusbiz";
 
     /**
      * 健康检查

@@ -135,7 +135,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>order</finalName>
         <defaultGoal>compile</defaultGoal>
         <resources>
             <resource>
