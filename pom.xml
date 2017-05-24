@@ -148,26 +148,13 @@
             </resource>
         </resources>
         <plugins>
-            <!--jcabi log-->
-            <plugin>
-                <groupId>com.jcabi</groupId>
-                <artifactId>jcabi-maven-plugin</artifactId>
-                <version>0.12</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>ajc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.2.0.v20140526</version>
                 <configuration>
                     <stopKey>foo</stopKey>
-                    <stopPort>8999</stopPort>
+                    <stopPort>9081</stopPort>
                     <scanIntervalSeconds>100</scanIntervalSeconds>
                     <webApp>
                         <contextPath>/</contextPath>
@@ -184,19 +171,6 @@
                 <configuration>
                     <webappDirectory>${war.webappDirectory}</webappDirectory>
                 </configuration>
-            </plugin>
-            <!--jcabi log-->
-            <plugin>
-                <groupId>com.jcabi</groupId>
-                <artifactId>jcabi-maven-plugin</artifactId>
-                <version>${jcabi_maven_plugin_version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>ajc</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

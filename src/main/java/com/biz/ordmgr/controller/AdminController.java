@@ -35,9 +35,7 @@ public final class AdminController {
      * 可登录的用户.
      */
     private static final String[] userId = {
-        "15019437731", "13838071871", "13810896836", "13311278161",
-        "15122048108", "hQjbwmaOCaLH40p3vEa90Ncy",
-        "18539963000", "15120073328"
+        "hQjbwmaOCaLH40p3vEa90Ncy"
     };
 
     private static final List<String> users = Arrays.asList(userId);
@@ -49,13 +47,6 @@ public final class AdminController {
     public static final Map<String, List<String>> userBidChannelMap = new HashMap<String, List<String>>();
 
     static {
-        userBidChannelMap.put("15019437731", Arrays.asList("1049"));
-        userBidChannelMap.put("13838071871", Arrays.asList("1022"));
-        userBidChannelMap.put("13810896836", Arrays.asList("1005"));
-        userBidChannelMap.put("13311278161", Arrays.asList("4002"));
-        userBidChannelMap.put("15122048108", Arrays.asList("3001"));
-        userBidChannelMap.put("18539963000", Arrays.asList("1011"));
-        userBidChannelMap.put("15120073328", Arrays.asList("1002"));
         userBidChannelMap.put(
             "hQjbwmaOCaLH40p3vEa90Ncy",
             Arrays.asList("1001", "1002", "1003", "1004", "1005", "1035",
