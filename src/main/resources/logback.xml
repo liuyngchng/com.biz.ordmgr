@@ -6,10 +6,10 @@
             </pattern>
         </encoder>
     </appender>
-    <appender name="ciOrdMgrAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>/opt/resin_log/ciOrdMgr/ciOrdMgr.log</File>
+    <appender name="orderAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>order/order.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>/opt/resin_log/ciOrdMgr/ciOrdMgr.%d{yyyy-MM-dd}.log.gz
+            <FileNamePattern>order/order.%d{yyyy-MM-dd}.log.gz
             </FileNamePattern>
         </rollingPolicy>
         <encoder>
@@ -20,7 +20,7 @@
 
     <logger name="com.biz" level="INFO" additivity="false">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="ciOrdMgrAppender"/>
+        <appender-ref ref="orderAppender"/>
     </logger>
 
     <logger name="org.springframework" level="INFO" additivity="false">
