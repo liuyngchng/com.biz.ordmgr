@@ -1,12 +1,12 @@
 <!-- 放款列表  -->
-<div><label class="col-sm-2 control-label backstage-select-label">统一进件放款列表</label></div>
+<div><label class="col-sm-2 control-label backstage-select-label">订单放款列表</label></div>
 <div class="ibox float-e-margins backstage-right-div">
     <div class="ibox-content">
         <form method="get" class="form-horizontal">
             <!-- 渠道 -->
             <input type="hidden" value='${bidChannelMapList}' id="bidChannelMapList">
             <div class="form-group backstage-form-group">
-                <label class="col-sm-2 control-label backstage-select-label">进件渠道:</label>
+                <label class="col-sm-2 control-label backstage-select-label">订单渠道:</label>
                 <div class="col-sm-10 backstage-col-sm-10">
                     <select class="form-control m-b backstage-select" name="bidChannel" id="bidChannel">
                         <option value="">-- 全部 --</option>
@@ -19,7 +19,7 @@
             <div class="hr-line-dashed backstage-hr-line-dashed"></div>
             <!-- 申请时间 -->
             <div class="form-group backstage-form-group">
-                <label class="col-sm-2 control-label backstage-select-label">进件时间:</label>
+                <label class="col-sm-2 control-label backstage-select-label">订单时间:</label>
                 <div class="col-sm-10 backstage-col-sm-10">
                     <input id="apply_begin" class="laydate-icon form-control layer-date backstage-date" readonly="readonly" placeholder="开始日期" name="">
                     <input id="apply_end" class="laydate-icon form-control layer-date backstage-date" readonly="readonly" placeholder="结束日期">
@@ -43,9 +43,9 @@
                 </div>
             </div>
             <div class="hr-line-dashed backstage-hr-line-dashed"></div>
-            <!-- 风控ID -->
+            <!-- 订单ID -->
             <div class="form-group backstage-form-group">
-                <label class="col-sm-2 control-label backstage-select-label">风控ID:</label>
+                <label class="col-sm-2 control-label backstage-select-label">订单ID:</label>
                 <div class="col-sm-10 backstage-col-sm-10">
                     <input class="form-control backstage-input" type="text" id="fkLoanNo" name="fkLoanNo">
                 </div>
@@ -154,7 +154,7 @@
                 }
             },{
                 field: 'loanApplyInfo.applyTime',
-                title: '进件申请时间',
+                title: '订单申请时间',
                 formatter: function (value, row, index) {
                     var str = typeof value === 'string' ? value.substr(0, 16) : '';
                     return tableDateFormatter(str);
@@ -182,10 +182,10 @@
                 }
             }, {
                 field: 'loanApplyInfo.applyNo',
-                title: '小狐订单ID'
+                title: '订单ID'
             }, {
                 field: 'loanApplyInfo.fkLoanNo',
-                title: '风刃进件ID'
+                title: '订单ID'
             }]
     })
     //设置查询参数
@@ -316,7 +316,7 @@
         } else if (value == 11) {
             return "复议";
         } else if (value == 12) {
-            return "进件中";
+            return "订单中";
         } else if (value == 13) {
             return "已逾期";
         } else if (value == 14) {

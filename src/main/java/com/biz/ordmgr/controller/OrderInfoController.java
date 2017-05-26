@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 统一进件进件申请查询.
+ * 订单订单申请查询.
  * @author Richard Liu(liuyongcheng@souyidai.com)
  * @version $Id$
  * @since 2016.12.8
@@ -26,7 +26,7 @@ public final class OrderInfoController {
 
 
     /**
-     * 进件查询页面.
+     * 订单查询页面.
      * @param request {@link HttpServletRequest} instance.
      * @return A string of view path.
      */

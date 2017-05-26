@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public final class WelcomeController {
 
     /**
-     * 小狐后台主页.
+     * 后台主页.
      * @param request A {@link HttpServletRequest} instance
      * @return A string result
      */

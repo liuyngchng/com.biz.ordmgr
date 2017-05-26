@@ -33,7 +33,7 @@ public final class SearchDto {
     private String auditStatus;
 
     /**
-     * 进件状态.
+     * 订单状态.
      */
     private String importStatus;
 
@@ -43,7 +43,7 @@ public final class SearchDto {
     private String idOrMobile;
 
     /**
-     * 风控id.
+     * 订单ID.
      */
     private String fkLoanNo;
 
@@ -88,7 +88,7 @@ public final class SearchDto {
     private String bizStatus;
 
     /**
-     * 渠道进件编号.
+     * 渠道订单编号.
      */
     private String partnerNo;
 
