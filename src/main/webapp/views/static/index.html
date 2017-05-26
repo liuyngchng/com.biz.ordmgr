@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(".submit").click(function(){
+//                    alert("start");
+                    var params= {"mobile":$(".mobile").val()};
+                    var url= "save/work.do";
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: params,
+                        success : function(data) {
+				            alert(data.responseText);
+                        },
+                        error: function(data) {
+                            alert(data.responseText);
+                        }
+                    });
+                })
+            })
+        </script>
+    </head>
+    <body style="font-family: 'Microsoft YaHei';font-size: 1rem;">
+        <div>
+            <label>手机</label>
+            <input class="mobile" type="text" name="mobile" value=""/>
+        </div>
+        <div>
+            <label>位置</label>
+            <input class="location" type="text" name="location" value=""/>
+        </div>
+        <div>
+            <label>期望工作描述</label>
+            <textarea cols="10" rows="3" name="work" ></textarea>
+        </div>
+        <div>
+            <span>&nbsp;</span>
+            <button class="submit">提交</button>
+        </div>
+    </body>
+</html>

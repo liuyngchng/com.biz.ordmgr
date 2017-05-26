@@ -29,7 +29,7 @@
     </filter>
     <filter-mapping>
         <filter-name>SpringEncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>*.do</url-pattern>
     </filter-mapping>
 
     <!-- springMVC核心配置 -->
@@ -44,7 +44,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 
     <listener>

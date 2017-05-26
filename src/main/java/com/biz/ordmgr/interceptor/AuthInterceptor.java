@@ -41,7 +41,7 @@ public final class AuthInterceptor implements HandlerInterceptor {
                 ((HandlerMethod) handler).getMethodAnnotation(
                     AuthPassport.class
                 );
-            LOGGER.info("authPassport is {}", JSON.toJSONString(authPassport));
+//            LOGGER.info("authPassport is {}", JSON.toJSONString(authPassport));
             if (authPassport == null)
                 return true;
             else {

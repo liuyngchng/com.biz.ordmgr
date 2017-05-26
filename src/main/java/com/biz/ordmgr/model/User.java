@@ -3,10 +3,7 @@ package com.biz.ordmgr.model;
 import java.io.Serializable;
 
 /**
- * 用户.
- * @author Richard Liu
- * @version $Id$
- * @since 2017.03.30
+ * Created by Richard on 5/26/17.
  */
 public final class User implements Serializable {
 
