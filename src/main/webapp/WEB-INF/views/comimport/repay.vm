@@ -104,7 +104,7 @@
         method: 'post',
         contentType: 'application/x-www-form-urlencoded',                //发送到服务器的数据编码类型
         dataType: 'json',                               //服务器返回的数据类型
-        url: '${request.contextPath}/comimport/import/data',
+        url: '${request.contextPath}/order/import/data',
         undefinedText: '-',                             //当数据为 undefined 时显示的字符
         striped: true,                                  //设置为 true 会有隔行变色效果
         pagination: true,                               //设置为 true 会在表格底部显示分页条
@@ -238,7 +238,7 @@
         var fkLoanNo = $("#fkLoanNo").val();
         var importStatus = $("#importStatus").val();
         var auditStatus = $("#auditStatus").val();
-        window.location.href = "${request.contextPath}/comimport/import/export?" +
+        window.location.href = "${request.contextPath}/order/import/export?" +
                 "pay_loan_begin=" + pay_loan_begin +
                 "&pay_loan_end=" + pay_loan_end +
                 "&idOrMobile=" + idOrMobile +
@@ -330,7 +330,7 @@
     })
     function getRepayPlanDetail(){
         var loanId = $(this).parent().parent().find("td").eq(9).html();
-        var url = "../comimport/repay/detail";
+        var url = "../order/repay/detail";
         $.ajax({
             method: "post",
             url: url,

@@ -116,7 +116,7 @@
         method: 'post',
         contentType: 'application/x-www-form-urlencoded',                //发送到服务器的数据编码类型
         dataType: 'json',                               //服务器返回的数据类型
-        url: '${request.contextPath}/comimport/import/data',
+        url: '${request.contextPath}/order/import/data',
         undefinedText: '-',                             //当数据为 undefined 时显示的字符
         striped: true,                                  //设置为 true 会有隔行变色效果
         pagination: true,                               //设置为 true 会在表格底部显示分页条
@@ -276,7 +276,7 @@
         var fkLoanNo = $("#fkLoanNo").val();
         var importStatus = $("#importStatus").val();
         var auditStatus = $("#auditStatus").val();
-        window.location.href = "${request.contextPath}/comimport/import/export?apply_begin=" + apply_begin +
+        window.location.href = "${request.contextPath}/order/import/export?apply_begin=" + apply_begin +
                                                                          "&apply_end=" + apply_end +
                                                                          "&idOrMobile=" + idOrMobile +
                                                                          "&fkLoanNo=" + fkLoanNo +
@@ -355,7 +355,7 @@
     function approveCharge(){
         var applyNo = $(this).parent().parent().find("td").eq(9).html();
         if (window.confirm('确认要提交吗？')) {
-            var url = "../comimport/charge";
+            var url = "../order/charge";
             $.ajax({
                 method: "post",
                 url: url,

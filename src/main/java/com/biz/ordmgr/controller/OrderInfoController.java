@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2016.12.8
  */
 @Controller
-@RequestMapping("comimport")
+@RequestMapping("order")
 public final class OrderInfoController {
 
     /**
@@ -34,7 +34,7 @@ public final class OrderInfoController {
     @RequestMapping("import")
     public ModelAndView getImportInfo(final HttpServletRequest request) {
         LOGGER.info("start getImportInfo");
-        final ModelAndView mv = new ModelAndView("comimport/import");
+        final ModelAndView mv = new ModelAndView("order/import");
         return mv;
     }
 
