@@ -176,7 +176,7 @@
                 }
             }, {
                 field: 'auditInfo.auditAmount',
-                title: '批贷金额',
+                title: '批准金额',
                 formatter: function(value, row, index) {
                     return FenToYuan(value)
                 }
