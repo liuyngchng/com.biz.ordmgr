@@ -31,11 +31,11 @@ public final class AuthInterceptor implements HandlerInterceptor {
      */
     private static final Logger LOGGER =
         LoggerFactory.getLogger(AuthInterceptor.class);
-    @Override
+//    @Override
     public boolean preHandle(final HttpServletRequest request,
         final HttpServletResponse response, final Object handler)
         throws Exception {
-        LOGGER.info("request.getContextPath() = {}", request.getContextPath());
+//        LOGGER.info("request.getContextPath() = {}", request.getContextPath());
         if(handler.getClass().isAssignableFrom(HandlerMethod.class)){
             final AuthPassport authPassport =
                 ((HandlerMethod) handler).getMethodAnnotation(
@@ -66,14 +66,14 @@ public final class AuthInterceptor implements HandlerInterceptor {
         }
     }
 
-    @Override
+//    @Override
     public void postHandle(final HttpServletRequest request,
         final HttpServletResponse response, final Object handler,
         final ModelAndView modelAndView) throws Exception {
 
     }
 
-    @Override
+//    @Override
     public void afterCompletion(final HttpServletRequest request,
         final HttpServletResponse response, final Object handler,
         final Exception ex) throws Exception {

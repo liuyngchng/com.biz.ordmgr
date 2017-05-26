@@ -20,7 +20,7 @@
     <div id="wrapper" class="backstage-right">
     #parse("common/menu.html")
         <div id="page-wrapper" class="gray-bg dashbard-1">
-            $!{Author}欢迎使用小狐后台
+            $!{Author}欢迎使用后台管理系统
             $!{bidChannelMap}
         </div>
     </div>

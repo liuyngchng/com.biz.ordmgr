@@ -3,7 +3,7 @@
 <html>
     <head>
         #parse("common/common.html")
-        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
         <script type="text/javascript">
             var phoneWidth =  parseInt(window.screen.width);
             var phoneScale = phoneWidth/640;
@@ -46,6 +46,9 @@
         <input type="hidden" name="contextPath" class="contextPath" value="${request.contextPath}">
         <div class="login-from-box">
         <form class="form-horizontal" role="form" method="post" action="${request.contextPath}/common/login" id="form1">
+            <div class="form-group"  style="text-align:center">
+                <h3>后台管理系统&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+            </div>
             <div class="form-group">
                 <label for="inputText3" class="col-xs-4 control-label">用户名：</label>
                 <div class="col-xs-8">

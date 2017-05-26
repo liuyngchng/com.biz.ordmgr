@@ -3,6 +3,7 @@ package com.biz.ordmgr.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.biz.ordmgr.auth.AuthPassport;
 import com.biz.ordmgr.model.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ public final class HealthCheckController {
      * 健康检查
      * @return 健康检查结果
      */
+    @AuthPassport
     @RequestMapping("check")
     @ResponseBody
     public Object health() {
