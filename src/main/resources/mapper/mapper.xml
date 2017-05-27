@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biz.ordmgr.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.biz.ordmgr.model.Order">
+        <id column="id" jdbcType="VARCHAR" property="orderId" />
+        <result column="bid" jdbcType="VARCHAR" property="userId" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="home_loc_id" jdbcType="VARCHAR" property="homeLocId" />
+        <result column="work_loc_id" jdbcType="VARCHAR" property="workLocId" />
+        <result column="desc" jdbcType="VARCHAR" property="desc" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="location" jdbcType="VARCHAR" property="location" />
+    </resultMap>
+    <!-- 新增记录 -->
+    <insert id="insertOrder" parameterMap="BaseResultMap" useGeneratedKeys="true"
+        keyProperty="id">
+        insert into
+        t_blog(title,content,owner)
+        values(#{title},#{content},#{owner})
+    </insert>
+    <!-- 删除记录 -->
+    <delete id="deleteOrder" parameterType="int">
+        delete from student where
+        id = #{id}
+    </delete>
+    <!-- 修改记录 -->
+    <update id="updateOrder" parameterMap="BaseResultMap">
+        update t_app_order
+        set title = #{title},content = #{content},owner = #{owner}
+        where id = #{id}
+    </update>
+
+    <sql id="Base_Column_List">
+        id, bid, mobile, home_loc_id, work_loc_id, create_time, update_time, location
+      </sql>
+    <!-- 查询单条记录 -->
+    <select id="selectOrder" parameterType="String" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />    
+        FROM
+            t_app_order
+        WHERE
+        id = #{id}
+    </select>
+</mapper>
