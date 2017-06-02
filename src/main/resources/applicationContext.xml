@@ -5,8 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <import resource="applicationContext-mvc.xml"/>
-    <import resource="applicationContext-mybatis.xml"/>
-    <context:property-placeholder location="classpath*:*.properties"/>
+    <!--<import resource="applicationContext-mybatis.xml"/>-->
+    <!--<context:property-placeholder location="classpath*:*.properties"/>-->
     <context:component-scan base-package="com.biz"/>
 
     <!-- velocity模板信息设置 -->

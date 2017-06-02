@@ -28,31 +28,40 @@
                         }
                     });
                 })
+                $(".myButton").click(getLocation);
+                function getLocation() {
+                    if (navigator.geolocation)
+                    {
+                        navigator.geolocation.getCurrentPosition(showPosition);
+                    } else{
+                        alert("Geolocation is not supported by this browser.");
+                    }
+                }
+                function showPosition(position) {
+                    alert(
+                        'lati:'+
+                        position.coords.latitude +
+                        "longi " +
+                        position.coords.longitude
+                    );
+                }
             })
         </script>
     </head>
     <body style="font-family: 'Microsoft YaHei';font-size: 1rem;">
-        <h3 style="align-content: center"><a hef="" data-icon="home" data-iconpos="center" data-theme="c">您期望的工作情况</a></h3>
+        <h3 style="align-content: center"><a hef="" data-icon="home" data-iconpos="center" data-theme="c">Content</a></h3>
 
         <div>
-            <label for="mobile">手机</label>
-            <input class="mobile" id="mobile" type="text" name="mobile" value="" placeholder="请输入您的手机号码"/>
+            <label for="mobile">Mobile:</label>
+            <input class="mobile" id="mobile" type="text" name="mobile" value="" placeholder="Your mobile"/>
         </div>
         <div>
-            <label for="address">住址</label>
-            <input class="home" type="text" id="address" name="address" value="" placeholder="请输入您的住址"/>
-        </div>
-        <div>
-            <label for="work_location">期望工作地点</label>
-            <input class="work_location" type="text" id="work_location" name="work_location" value="" placeholder="请输入您期望的工作地点"/>
-        </div>
-        <div>
-            <label for="work_desc">期望工作描述</label>
-            <textarea cols="10" rows="3" name="work_desc" id="work_desc" placeholder="对您期望的工作内容进行描述，最好100字以内哦，亲～～" ></textarea>
+            <label for="address">Name:</label>
+            <input class="home" type="text" id="address" name="address" value="" placeholder="Your name"/>
         </div>
         <div>
             <span>&nbsp;</span>
-            <button class="submit" style="background-color: lightseagreen;">提&nbsp;&nbsp;交</button>
+            <button class="ui-btn ui-corner-all myButton">Button</button>
         </div>
     </body>
 </html>
