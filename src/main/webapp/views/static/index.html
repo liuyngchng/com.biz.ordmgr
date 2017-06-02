@@ -38,12 +38,11 @@
                     }
                 }
                 function showPosition(position) {
-                    alert(
-                        'lati:'+
-                        position.coords.latitude +
-                        "longi " +
-                        position.coords.longitude
-                    );
+                    var txt = 'lati:'+
+                            position.coords.latitude +
+                            "longi " +
+                            position.coords.longitude;
+                    $(".gps").val(txt);
                 }
             })
         </script>
@@ -58,6 +57,10 @@
         <div>
             <label for="address">Name:</label>
             <input class="home" type="text" id="address" name="address" value="" placeholder="Your name"/>
+        </div>
+        <div>
+            <label for="gps">GPS:</label>
+            <input class="gps" type="text" id="gps" name="gps" value=""/>
         </div>
         <div>
             <span>&nbsp;</span>
