@@ -31,18 +31,22 @@
                 })
                 $(".myButton").click(getLocation);
                 function getLocation() {
+                    console.log("1");
                     if (navigator.geolocation)
                     {
-                        navigator.geolocation.getCurrentPosition(showPosition);
+                        console.log("2");
+                        navigator.geolocation.getCurrentPosition(showPosition, showError);
                     } else{
                         alert("Geolocation is not supported by this browser.");
                     }
                 }
                 function showPosition(position) {
+                    console.log("3");
                     var txt = 'lati: '+
                             position.coords.latitude +
                             "; longi: " +
                             position.coords.longitude;
+                    console.log("4");
                     $(".gps").val(txt);
                     var url= 'https://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location='+
                             position.coords.latitude + ',' +
@@ -55,6 +59,22 @@
                             $(".address").val(data["result"]["formatted_address"]);
                         }
                     });
+                }
+                function showError(error){
+                    switch(error.code){
+                        case error.PERMISSION_DENIED:
+                            $(".address").val("User denied the request for Geolocation.");
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            $(".address").val("Location information is unavailable.");
+                            break;
+                        case error.TIMEOUT:
+                            $(".address").val("The request to get user location timed out.");
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            $(".address").val("An unknown error occurred.");
+                            break;
+                    }
                 }
             })
         </script>
