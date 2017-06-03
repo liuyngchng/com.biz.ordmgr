@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
         <meta name="author" content="Richard Liu, liuyngchng@hotmail.com">
         <meta name="designer" content="">
         <meta name="owner" content="">
         <meta name="url" content="/order/index.do">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $(".submit").click(function(){
-//                    alert("start");
+    //                    alert("start");
                     var params= {"mobile":$(".mobile").val()};
                     var url= "save/work.do";
                     $.ajax({
@@ -22,7 +22,7 @@
                         url: url,
                         data: params,
                         success : function(data) {
-				            alert(data.responseText);
+                            alert(data.responseText);
                         },
                         error: function(data) {
                             alert(data.responseText);
@@ -39,12 +39,12 @@
                     }
                 }
                 function showPosition(position) {
-                    var txt = 'lati:'+
+                    var txt = 'lati: '+
                             position.coords.latitude +
-                            "longi " +
+                            "; longi: " +
                             position.coords.longitude;
                     $(".gps").val(txt);
-                    var url= 'http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location='+
+                    var url= 'https://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location='+
                             position.coords.latitude + ',' +
                             position.coords.longitude +
                             '&output=json&pois=1&ak=fQTBLRs0A66NjB91FyChOEuGXVXjGc7W';
@@ -52,7 +52,6 @@
                         url: url,
                         dataType: 'JSONP',
                         success: function (data) {
-                            alert(["result"]["formatted_address"]);
                             $(".address").val(data["result"]["formatted_address"]);
                         }
                     });
@@ -62,14 +61,9 @@
     </head>
     <body style="font-family: 'Microsoft YaHei';font-size: 1rem;">
         <h3 style="align-content: center"><a hef="" data-icon="home" data-iconpos="center" data-theme="c">Content</a></h3>
-
         <div>
-            <label for="mobile">Mobile:</label>
-            <input class="mobile" id="mobile" type="text" name="mobile" value="" placeholder="Your mobile"/>
-        </div>
-        <div>
-            <label for="address">Address:</label>
-            <input class="address" type="text" id="address" name="address" value="" placeholder="Your name"/>
+            <label for="Address">Location:</label>
+            <input class="address" type="text" id="address" name="address" value="" />
         </div>
         <div>
             <label for="gps">GPS:</label>
@@ -77,7 +71,7 @@
         </div>
         <div>
             <span>&nbsp;</span>
-            <button class="ui-btn ui-corner-all myButton">Button</button>
+            <button class="ui-btn ui-corner-all myButton">获取位置</button>
         </div>
     </body>
 </html>
