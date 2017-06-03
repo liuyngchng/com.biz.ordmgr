@@ -61,20 +61,22 @@
                     });
                 }
                 function showError(error){
+                    var info = '';
                     switch(error.code){
                         case error.PERMISSION_DENIED:
-                            $(".address").val("User denied the request for Geolocation.");
+                            info = "User denied the request for Geolocation.";
                             break;
                         case error.POSITION_UNAVAILABLE:
-                            $(".address").val("Location information is unavailable.");
+                            info = "Location information is unavailable.";
                             break;
                         case error.TIMEOUT:
-                            $(".address").val("The request to get user location timed out.");
+                            info = "The request to get user location timed out.";
                             break;
                         case error.UNKNOWN_ERROR:
-                            $(".address").val("An unknown error occurred.");
+                            info = "An unknown error occurred.";
                             break;
                     }
+                    $(".address").val(info);
                 }
             })
         </script>
