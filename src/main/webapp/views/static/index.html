@@ -7,6 +7,7 @@
         <meta name="designer" content="">
         <meta name="owner" content="">
         <meta name="url" content="/order/index.do">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -43,6 +44,18 @@
                             "longi " +
                             position.coords.longitude;
                     $(".gps").val(txt);
+                    var url= 'http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location='+
+                            position.coords.latitude + ',' +
+                            position.coords.longitude +
+                            '&output=json&pois=1&ak=fQTBLRs0A66NjB91FyChOEuGXVXjGc7W';
+                    $.ajax({
+                        url: url,
+                        dataType: 'JSONP',
+                        success: function (data) {
+                            alert(["result"]["formatted_address"]);
+                            $(".address").val(data["result"]["formatted_address"]);
+                        }
+                    });
                 }
             })
         </script>
@@ -55,8 +68,8 @@
             <input class="mobile" id="mobile" type="text" name="mobile" value="" placeholder="Your mobile"/>
         </div>
         <div>
-            <label for="address">Name:</label>
-            <input class="home" type="text" id="address" name="address" value="" placeholder="Your name"/>
+            <label for="address">Address:</label>
+            <input class="address" type="text" id="address" name="address" value="" placeholder="Your name"/>
         </div>
         <div>
             <label for="gps">GPS:</label>
